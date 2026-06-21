@@ -381,16 +381,33 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                   <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150" alt="Liam">
                   <span>Liam (Creative)</span>
                 </div>
+                <div class="avatar-option-card" id="btn-upload-avatar-card" data-avatar="uploaded">
+                  <div class="avatar-upload-icon-box" style="width: 64px; height: 64px; border-radius: 50%; border: 2px dashed var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--text-muted); background-color: rgba(255,255,255,0.02);">
+                    <i class="fa-solid fa-plus"></i>
+                  </div>
+                  <span>Upload Photo</span>
+                  <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+                </div>
               </div>
             </div>
 
             <div class="control-section">
-              <label for="avatar-voice-select">Choose AI Accent / Voice</label>
+              <div class="flex-label">
+                <label for="avatar-voice-select">Choose AI Accent / Voice</label>
+                <button class="btn btn-secondary btn-xs" id="btn-clone-voice" style="border-color: var(--color-accent-pro); color: #c084fc;">
+                  <i class="fa-solid fa-microphone"></i> Clone Your Voice <span class="badge pro" style="font-size: 0.55rem; padding: 1px 4px; margin-left: 4px;"><i class="fa-solid fa-crown"></i> Pro</span>
+                </button>
+              </div>
               <select id="avatar-voice-select">
                 <!-- Populated dynamically via SpeechSynthesis -->
                 <option value="en-US">English (US) - Professional Female</option>
                 <option value="en-GB">English (UK) - Executive Male</option>
               </select>
+              <!-- Mock recorder status overlay -->
+              <div id="voice-recorder-status" style="display: none; align-items: center; gap: 10px; margin-top: 6px; padding: 6px 12px; background-color: rgba(168, 85, 247, 0.1); border: 1px dashed rgba(168, 85, 247, 0.25); border-radius: var(--radius-sm); font-size: 0.75rem;">
+                <div class="voice-pulse-circle" style="width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444; animation: recording-pulse 1s infinite alternate;"></div>
+                <span id="voice-recorder-text">Recording sample... Speak for 5 seconds.</span>
+              </div>
             </div>
 
             <div class="control-section">
@@ -439,6 +456,14 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                 <div class="avatar-character-viewport" id="viewport-liam">
                   <div class="avatar-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Liam" class="avatar-image-base">
+                    <div class="pulse-overlay-ring"></div>
+                    <div class="mouth-indicator"></div>
+                  </div>
+                </div>
+
+                <div class="avatar-character-viewport" id="viewport-uploaded">
+                  <div class="avatar-img-wrapper">
+                    <img src="" alt="User Uploaded Photo" class="avatar-image-base" id="avatar-image-uploaded">
                     <div class="pulse-overlay-ring"></div>
                     <div class="mouth-indicator"></div>
                   </div>

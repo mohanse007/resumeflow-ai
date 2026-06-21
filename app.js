@@ -83,6 +83,12 @@ const DOM = {
   avatarStatusText: document.getElementById('avatar-status-text'),
   scriptWordCount: document.getElementById('script-word-count'),
   scriptDuration: document.getElementById('script-duration'),
+  btnUploadAvatarCard: document.getElementById('btn-upload-avatar-card'),
+  avatarFileInput: document.getElementById('avatar-file-input'),
+  avatarImageUploaded: document.getElementById('avatar-image-uploaded'),
+  btnCloneVoice: document.getElementById('btn-clone-voice'),
+  voiceRecorderStatus: document.getElementById('voice-recorder-status'),
+  voiceRecorderText: document.getElementById('voice-recorder-text'),
   
   // Careerflow CRM
   btnSaveCRMJob: document.getElementById('btn-add-job-crm'),
@@ -782,7 +788,107 @@ function renderResume() {
 
 // --- 4. AI Video Avatar Pitch & WebSpeech TTS Engine ---
 function initAvatarSpeech() {
-  // 1. Selector for avatars
+  // 1. Photo Upload Event Listener (Gated behind Pro)
+  if (DOM.btnUploadAvatarCard) {
+    DOM.btnUploadAvatarCard.addEventListener('click', (e) => {
+      // Gate behind Pro
+      if (!state.isPro) {
+        e.stopPropagation();
+        DOM.upgradeModal.classList.add('active');
+        return;
+      }
+      
+      // If upgraded, trigger file explorer input
+      if (DOM.avatarFileInput) {
+        DOM.avatarFileInput.click();
+      }
+    });
+  }
+
+  if (DOM.avatarFileInput) {
+    DOM.avatarFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      if (DOM.avatarImageUploaded) {
+        DOM.avatarImageUploaded.src = url;
+      }
+
+      // Activate the uploaded avatar option card and viewport
+      DOM.avatarCards.forEach(c => c.classList.remove('active'));
+      const uploadCard = document.getElementById('btn-upload-avatar-card');
+      if (uploadCard) uploadCard.classList.add('active');
+
+      DOM.avatarViewports.forEach(vp => {
+        vp.classList.remove('active');
+        if (vp.id === 'viewport-uploaded') {
+          vp.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // 2. Voice Cloning Recorder Listener (Gated behind Pro)
+  if (DOM.btnCloneVoice) {
+    DOM.btnCloneVoice.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // Gate behind Pro
+      if (!state.isPro) {
+        DOM.upgradeModal.classList.add('active');
+        return;
+      }
+
+      // If Pro is active, trigger mock voice recorder
+      if (DOM.voiceRecorderStatus) {
+        DOM.voiceRecorderStatus.style.display = 'flex';
+        DOM.btnCloneVoice.disabled = true;
+
+        let secondsLeft = 5;
+        if (DOM.voiceRecorderText) {
+          DOM.voiceRecorderText.textContent = `🎤 Recording sample... Speak into your mic: ${secondsLeft}s left`;
+        }
+
+        const countdownInterval = setInterval(() => {
+          secondsLeft--;
+          if (secondsLeft > 0) {
+            if (DOM.voiceRecorderText) {
+              DOM.voiceRecorderText.textContent = `🎤 Recording sample... Speak into your mic: ${secondsLeft}s left`;
+            }
+          } else {
+            clearInterval(countdownInterval);
+            
+            // Phase 2: Analyzing
+            if (DOM.voiceRecorderText) {
+              DOM.voiceRecorderText.textContent = `⚙️ Analyzing speech characteristics and cloning vocal frequency...`;
+            }
+
+            setTimeout(() => {
+              // Phase 3: Done
+              if (DOM.voiceRecorderStatus) {
+                DOM.voiceRecorderStatus.style.display = 'none';
+              }
+              DOM.btnCloneVoice.disabled = false;
+
+              // Inject cloned voice option into voice selector
+              if (DOM.avatarVoiceSelect) {
+                const opt = document.createElement('option');
+                opt.value = "cloned-user-voice";
+                opt.textContent = `👤 Cloned Voice (My Custom Voice)`;
+                opt.selected = true;
+                DOM.avatarVoiceSelect.insertBefore(opt, DOM.avatarVoiceSelect.firstChild);
+              }
+
+              alert("🎉 Voice cloning completed! 'My Custom Voice' has been successfully created and selected as your active presenter voice.");
+            }, 2000);
+          }
+        }, 1000);
+      }
+    });
+  }
+
+  // 3. Selector for avatars
   DOM.avatarCards.forEach(card => {
     card.addEventListener('click', () => {
       DOM.avatarCards.forEach(c => c.classList.remove('active'));
