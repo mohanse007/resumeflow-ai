@@ -405,8 +405,15 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
               </select>
               <!-- Mock recorder status overlay -->
               <div id="voice-recorder-status" style="display: none; align-items: center; gap: 10px; margin-top: 6px; padding: 6px 12px; background-color: rgba(168, 85, 247, 0.1); border: 1px dashed rgba(168, 85, 247, 0.25); border-radius: var(--radius-sm); font-size: 0.75rem;">
-                <div class="voice-pulse-circle" style="width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444; animation: recording-pulse 1s infinite alternate;"></div>
+                <div class="voice-pulse-circle" id="voice-pulse-circle" style="width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444; transition: transform 0.05s ease;"></div>
                 <span id="voice-recorder-text">Recording sample... Speak for 5 seconds.</span>
+                <div class="recording-bars" id="recording-bars" style="display: flex; gap: 3px; align-items: center; height: 16px; margin-left: auto;">
+                  <div class="rec-bar" style="width: 2px; height: 4px; background-color: #ef4444; border-radius: 1px; transition: height 0.05s ease;"></div>
+                  <div class="rec-bar" style="width: 2px; height: 4px; background-color: #ef4444; border-radius: 1px; transition: height 0.05s ease;"></div>
+                  <div class="rec-bar" style="width: 2px; height: 4px; background-color: #ef4444; border-radius: 1px; transition: height 0.05s ease;"></div>
+                  <div class="rec-bar" style="width: 2px; height: 4px; background-color: #ef4444; border-radius: 1px; transition: height 0.05s ease;"></div>
+                  <div class="rec-bar" style="width: 2px; height: 4px; background-color: #ef4444; border-radius: 1px; transition: height 0.05s ease;"></div>
+                </div>
               </div>
             </div>
 
@@ -441,7 +448,6 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" alt="Sophia" class="avatar-image-base">
                     <!-- Dynamic simulated lips / talking indicator overlay -->
                     <div class="pulse-overlay-ring"></div>
-                    <div class="mouth-indicator"></div>
                   </div>
                 </div>
 
@@ -449,7 +455,6 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                   <div class="avatar-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600" alt="James" class="avatar-image-base">
                     <div class="pulse-overlay-ring"></div>
-                    <div class="mouth-indicator"></div>
                   </div>
                 </div>
 
@@ -457,7 +462,6 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                   <div class="avatar-img-wrapper">
                     <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Liam" class="avatar-image-base">
                     <div class="pulse-overlay-ring"></div>
-                    <div class="mouth-indicator"></div>
                   </div>
                 </div>
 
@@ -465,8 +469,31 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                   <div class="avatar-img-wrapper">
                     <img src="" alt="User Uploaded Photo" class="avatar-image-base" id="avatar-image-uploaded">
                     <div class="pulse-overlay-ring"></div>
-                    <div class="mouth-indicator"></div>
                   </div>
+                </div>
+
+                <!-- AI Sound Wave Visualizer Overlay -->
+                <div class="sound-wave-visualizer" id="ai-sound-wave">
+                  <div class="wave-bar bar-1"></div>
+                  <div class="wave-bar bar-2"></div>
+                  <div class="wave-bar bar-3"></div>
+                  <div class="wave-bar bar-4"></div>
+                  <div class="wave-bar bar-5"></div>
+                  <div class="wave-bar bar-6"></div>
+                  <div class="wave-bar bar-7"></div>
+                </div>
+
+                <!-- Video Rendering Simulator Overlay -->
+                <div class="video-rendering-overlay" id="rendering-overlay" style="display: none;">
+                  <div class="rendering-spinner-box">
+                    <div class="rendering-spinner"></div>
+                  </div>
+                  <div class="rendering-title">Generating HD Video Resume</div>
+                  <div class="rendering-progress-container">
+                    <div class="rendering-progress-bar" id="rendering-progress"></div>
+                  </div>
+                  <div class="rendering-percent" id="rendering-percent">0%</div>
+                  <div class="rendering-step" id="rendering-step">Initializing rendering pipeline...</div>
                 </div>
 
                 <!-- Video overlay elements -->

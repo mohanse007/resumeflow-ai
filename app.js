@@ -5,6 +5,8 @@
 // --- Global App State ---
 const state = {
   isPro: false,
+  clonedAudioUrl: null,
+  videoGenerated: false,
   activeTab: 'builder-tab',
   resume: {
     fullName: "John Smith",
@@ -89,6 +91,12 @@ const DOM = {
   btnCloneVoice: document.getElementById('btn-clone-voice'),
   voiceRecorderStatus: document.getElementById('voice-recorder-status'),
   voiceRecorderText: document.getElementById('voice-recorder-text'),
+  voicePulseCircle: document.getElementById('voice-pulse-circle'),
+  recordingBars: document.getElementById('recording-bars'),
+  renderingOverlay: document.getElementById('rendering-overlay'),
+  renderingProgress: document.getElementById('rendering-progress'),
+  renderingPercent: document.getElementById('rendering-percent'),
+  renderingStep: document.getElementById('rendering-step'),
   
   // Careerflow CRM
   btnSaveCRMJob: document.getElementById('btn-add-job-crm'),
@@ -123,6 +131,7 @@ const DOM = {
 // --- Speech Synthesis Instance ---
 let currentUtterance = null;
 let speechInterval = null;
+let activeAudio = null;
 
 // --- Initialize App ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -831,7 +840,7 @@ function initAvatarSpeech() {
 
   // 2. Voice Cloning Recorder Listener (Gated behind Pro)
   if (DOM.btnCloneVoice) {
-    DOM.btnCloneVoice.addEventListener('click', (e) => {
+    DOM.btnCloneVoice.addEventListener('click', async (e) => {
       e.preventDefault();
 
       // Gate behind Pro
@@ -840,7 +849,7 @@ function initAvatarSpeech() {
         return;
       }
 
-      // If Pro is active, trigger mock voice recorder
+      // If Pro is active, trigger voice recorder
       if (DOM.voiceRecorderStatus) {
         DOM.voiceRecorderStatus.style.display = 'flex';
         DOM.btnCloneVoice.disabled = true;
@@ -850,14 +859,137 @@ function initAvatarSpeech() {
           DOM.voiceRecorderText.textContent = `🎤 Recording sample... Speak into your mic: ${secondsLeft}s left`;
         }
 
+        let mediaStream = null;
+        let mediaRecorder = null;
+        let audioContext = null;
+        let analyser = null;
+        let isRecording = true;
+        let audioChunks = [];
+        let animationFrameId = null;
+        let fallbackInterval = null;
+
+        // Reset elements style
+        if (DOM.voicePulseCircle) {
+          DOM.voicePulseCircle.style.transform = 'scale(1)';
+        }
+
+        try {
+          // Request mic access
+          mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          
+          // Setup Audio Analyzer
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          const source = audioContext.createMediaStreamSource(mediaStream);
+          analyser = audioContext.createAnalyser();
+          analyser.fftSize = 256;
+          source.connect(analyser);
+          
+          const dataArray = new Uint8Array(analyser.frequencyBinCount);
+          
+          // Volume loop
+          const updateVolume = () => {
+            if (!isRecording) return;
+            analyser.getByteFrequencyData(dataArray);
+            
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+              sum += dataArray[i];
+            }
+            const average = sum / dataArray.length;
+            const volume = average / 128; // Normalized value between 0 and 2 roughly
+            
+            // Pulse the mic circle
+            if (DOM.voicePulseCircle) {
+              DOM.voicePulseCircle.style.transform = `scale(${1 + Math.min(volume * 1.5, 2)})`;
+            }
+            
+            // Bouncing volume bars
+            if (DOM.recordingBars) {
+              const bars = DOM.recordingBars.querySelectorAll('.rec-bar');
+              bars.forEach((bar) => {
+                const randomFactor = 0.6 + Math.random() * 0.4;
+                const height = Math.max(4, Math.round(volume * 18 * randomFactor));
+                bar.style.height = `${height}px`;
+              });
+            }
+            
+            animationFrameId = requestAnimationFrame(updateVolume);
+          };
+          
+          updateVolume();
+
+          // Start actual media recorder
+          mediaRecorder = new MediaRecorder(mediaStream);
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
+          mediaRecorder.start();
+
+        } catch (err) {
+          console.warn("Microphone access denied or unavailable, falling back to simulation:", err);
+          if (DOM.voiceRecorderText) {
+            DOM.voiceRecorderText.textContent = `🎤 (Simulated) Recording sample... Speak now: ${secondsLeft}s left`;
+          }
+          
+          // Fallback simulation
+          fallbackInterval = setInterval(() => {
+            if (!isRecording) return;
+            const simVolume = Math.random() * 0.4;
+            
+            if (DOM.voicePulseCircle) {
+              DOM.voicePulseCircle.style.transform = `scale(${1 + simVolume * 1.8})`;
+            }
+            
+            if (DOM.recordingBars) {
+              const bars = DOM.recordingBars.querySelectorAll('.rec-bar');
+              bars.forEach((bar) => {
+                const height = Math.max(4, Math.round(simVolume * 18 * (0.6 + Math.random() * 0.4)));
+                bar.style.height = `${height}px`;
+              });
+            }
+          }, 100);
+        }
+
+        // 5s Countdown timer
         const countdownInterval = setInterval(() => {
           secondsLeft--;
           if (secondsLeft > 0) {
             if (DOM.voiceRecorderText) {
-              DOM.voiceRecorderText.textContent = `🎤 Recording sample... Speak into your mic: ${secondsLeft}s left`;
+              const prefix = mediaStream ? "🎤 Recording sample... Speak into your mic:" : "🎤 (Simulated) Recording sample... Speak now:";
+              DOM.voiceRecorderText.textContent = `${prefix} ${secondsLeft}s left`;
             }
           } else {
             clearInterval(countdownInterval);
+            isRecording = false;
+            
+            // Clean up recording context
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            if (fallbackInterval) clearInterval(fallbackInterval);
+            
+            if (DOM.voicePulseCircle) DOM.voicePulseCircle.style.transform = 'scale(1)';
+            if (DOM.recordingBars) {
+              DOM.recordingBars.querySelectorAll('.rec-bar').forEach(bar => bar.style.height = '4px');
+            }
+
+            // Stop MediaRecorder and store audio
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+              mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                state.clonedAudioUrl = URL.createObjectURL(audioBlob);
+              };
+              mediaRecorder.stop();
+            }
+
+            // Stop mic tracks
+            if (mediaStream) {
+              mediaStream.getTracks().forEach(track => track.stop());
+            }
+
+            if (audioContext) {
+              audioContext.close();
+            }
             
             // Phase 2: Analyzing
             if (DOM.voiceRecorderText) {
@@ -873,11 +1005,14 @@ function initAvatarSpeech() {
 
               // Inject cloned voice option into voice selector
               if (DOM.avatarVoiceSelect) {
-                const opt = document.createElement('option');
-                opt.value = "cloned-user-voice";
-                opt.textContent = `👤 Cloned Voice (My Custom Voice)`;
-                opt.selected = true;
-                DOM.avatarVoiceSelect.insertBefore(opt, DOM.avatarVoiceSelect.firstChild);
+                let existingOpt = DOM.avatarVoiceSelect.querySelector('option[value="cloned-user-voice"]');
+                if (!existingOpt) {
+                  const opt = document.createElement('option');
+                  opt.value = "cloned-user-voice";
+                  opt.textContent = `👤 Cloned Voice (My Custom Voice)`;
+                  DOM.avatarVoiceSelect.insertBefore(opt, DOM.avatarVoiceSelect.firstChild);
+                }
+                DOM.avatarVoiceSelect.value = "cloned-user-voice";
               }
 
               alert("🎉 Voice cloning completed! 'My Custom Voice' has been successfully created and selected as your active presenter voice.");
@@ -958,6 +1093,14 @@ function initAvatarSpeech() {
 
   // 4. TTS speech play with visual mouth-indicator sync
   DOM.btnPlayVoice.addEventListener('click', () => {
+    // If playing custom cloned audio, stop it
+    if (activeAudio) {
+      activeAudio.pause();
+      activeAudio = null;
+      stopSpeechAnimation();
+      return;
+    }
+
     if (speechSynthesis.speaking) {
       speechSynthesis.cancel();
       stopSpeechAnimation();
@@ -967,19 +1110,63 @@ function initAvatarSpeech() {
     const script = DOM.avatarScriptText.value;
     if (!script) return;
 
+    // Check if voice is Cloned Voice
+    const selectedVoiceName = DOM.avatarVoiceSelect.value;
+    
+    if (selectedVoiceName === 'cloned-user-voice') {
+      if (state.clonedAudioUrl) {
+        // Play the recorded sample first
+        activeAudio = new Audio(state.clonedAudioUrl);
+        
+        activeAudio.onplay = () => {
+          document.body.classList.add('speaking-active');
+          DOM.btnPlayVoice.innerHTML = `<i class="fa-solid fa-circle-stop"></i> Stop Presentation`;
+          DOM.avatarStatusText.textContent = "Playing Cloned Voice Sample...";
+          DOM.ccTextBox.textContent = `"[Playing recorded voice print sample...]"`;
+        };
+        
+        activeAudio.onended = () => {
+          activeAudio = null;
+          // Speak the rest of the script with pitch-shifted TTS
+          speakTTS(script, true);
+        };
+        
+        activeAudio.onerror = () => {
+          activeAudio = null;
+          speakTTS(script, true);
+        };
+        
+        activeAudio.play();
+      } else {
+        speakTTS(script, true);
+      }
+    } else {
+      speakTTS(script, false);
+    }
+  });
+
+  // Helper function to read text via browser TTS
+  function speakTTS(script, isCloned) {
     currentUtterance = new SpeechSynthesisUtterance(script);
     
-    // Select Voice
-    const selectedVoiceName = DOM.avatarVoiceSelect.value;
-    const voices = speechSynthesis.getVoices();
-    const voice = voices.find(v => v.name === selectedVoiceName);
-    if (voice) currentUtterance.voice = voice;
+    if (isCloned) {
+      currentUtterance.pitch = 0.85; // Custom pitch adjustment to sound "cloned/synthesized"
+      currentUtterance.rate = 0.95;
+      
+      const voices = speechSynthesis.getVoices();
+      const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Natural')) || voices[0];
+      if (preferred) currentUtterance.voice = preferred;
+    } else {
+      const selectedVoiceName = DOM.avatarVoiceSelect.value;
+      const voices = speechSynthesis.getVoices();
+      const voice = voices.find(v => v.name === selectedVoiceName);
+      if (voice) currentUtterance.voice = voice;
+    }
 
-    // Speech events
     currentUtterance.onstart = () => {
       document.body.classList.add('speaking-active');
       DOM.btnPlayVoice.innerHTML = `<i class="fa-solid fa-circle-stop"></i> Stop Presentation`;
-      DOM.avatarStatusText.textContent = "Presenting Audio Pitch...";
+      DOM.avatarStatusText.textContent = isCloned ? "Presenting with Cloned Voice..." : "Presenting Audio Pitch...";
     };
 
     currentUtterance.onend = () => {
@@ -990,21 +1177,125 @@ function initAvatarSpeech() {
       stopSpeechAnimation();
     };
 
-    // Subtitles tracking boundary events
     currentUtterance.onboundary = (event) => {
       if (event.name === 'word') {
         const textOffset = event.charIndex;
-        const totalText = script;
-        const currentSlice = totalText.substring(textOffset, textOffset + 35);
+        const currentSlice = script.substring(textOffset, textOffset + 35);
         DOM.ccTextBox.textContent = `"${currentSlice}..."`;
       }
     };
 
     speechSynthesis.speak(currentUtterance);
-  });
+  }
+
+  // 5. HD Video Generation click listener (Gated behind Pro)
+  if (DOM.btnExportHdVideo) {
+    DOM.btnExportHdVideo.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // Gate behind Pro
+      if (!state.isPro) {
+        DOM.upgradeModal.classList.add('active');
+        return;
+      }
+
+      // If already generated, download again
+      if (state.videoGenerated) {
+        triggerVideoDownload();
+        return;
+      }
+
+      const script = DOM.avatarScriptText.value;
+      if (!script) {
+        alert("Please write or generate an elevator pitch script first.");
+        return;
+      }
+
+      // Start rendering simulation
+      if (DOM.renderingOverlay) {
+        DOM.renderingOverlay.style.display = 'flex';
+      }
+
+      let progress = 0;
+      const steps = [
+        "Initializing rendering pipeline...",
+        "Analyzing facial structure & mouth landmarks...",
+        "Synthesizing vocal characteristics with ElevenLabs models...",
+        "Stitching lip-sync frames and facial expressions...",
+        "Rendering high-fidelity 1080p video stream...",
+        "Finalizing video container & adding subtitles...",
+        "Success! HD Video Resume generated!"
+      ];
+
+      const renderingInterval = setInterval(() => {
+        progress += 2;
+        if (progress > 100) progress = 100;
+
+        if (DOM.renderingProgress) {
+          DOM.renderingProgress.style.width = `${progress}%`;
+        }
+        if (DOM.renderingPercent) {
+          DOM.renderingPercent.textContent = `${progress}%`;
+        }
+
+        // Change step text based on progress
+        let stepIdx = Math.min(Math.floor((progress / 100) * steps.length), steps.length - 1);
+        if (DOM.renderingStep) {
+          DOM.renderingStep.textContent = steps[stepIdx];
+        }
+
+        if (progress === 100) {
+          clearInterval(renderingInterval);
+          
+          setTimeout(() => {
+            // Hide overlay
+            if (DOM.renderingOverlay) {
+              DOM.renderingOverlay.style.display = 'none';
+            }
+
+            // Change button state to Download
+            DOM.btnExportHdVideo.innerHTML = `<i class="fa-solid fa-download"></i> Download HD Video (MP4)`;
+            DOM.btnExportHdVideo.classList.remove('btn-premium');
+            DOM.btnExportHdVideo.classList.add('btn-success');
+            DOM.btnExportHdVideo.style.backgroundColor = 'var(--color-primary)';
+            DOM.btnExportHdVideo.style.borderColor = 'var(--color-primary)';
+            DOM.btnExportHdVideo.style.color = '#fff';
+            
+            state.videoGenerated = true;
+
+            if (DOM.avatarStatusText) {
+              DOM.avatarStatusText.textContent = "HD Video Resume Generated";
+            }
+
+            // Trigger mock download
+            triggerVideoDownload();
+            
+            alert("🎉 AI HD Video Resume generated successfully! You can now download your digital avatar video pitch as an MP4 file.");
+          }, 800);
+        }
+      }, 90); // ~4.5 seconds total
+    });
+  }
+
+  function triggerVideoDownload() {
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wZDQybXA0MQAAAAhibW9vdgAAAGxtdmhkAAAAAM21h...'); // small mock data
+    element.setAttribute('download', `${state.resume.fullName.replace(/\s+/g, '_')}_Video_Resume.mp4`);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
 }
 
 function stopSpeechAnimation() {
+  if (activeAudio) {
+    activeAudio.pause();
+    activeAudio = null;
+  }
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+  }
   document.body.classList.remove('speaking-active');
   DOM.btnPlayVoice.innerHTML = `<i class="fa-solid fa-volume-high"></i> Play Speech Preview`;
   DOM.avatarStatusText.textContent = "Ready to Record";
