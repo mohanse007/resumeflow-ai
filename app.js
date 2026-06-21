@@ -6,7 +6,10 @@
 const state = {
   isPro: false,
   clonedAudioUrl: null,
+  clonedAudioBlob: null,
   videoGenerated: false,
+  useLocalServer: false,
+  localServerUrl: 'http://localhost:5000/tts',
   activeTab: 'builder-tab',
   resume: {
     fullName: "John Smith",
@@ -97,6 +100,9 @@ const DOM = {
   renderingProgress: document.getElementById('rendering-progress'),
   renderingPercent: document.getElementById('rendering-percent'),
   renderingStep: document.getElementById('rendering-step'),
+  localserverEnable: document.getElementById('localserver-enable'),
+  localserverFields: document.getElementById('localserver-fields'),
+  localserverUrl: document.getElementById('localserver-url'),
   
   // Careerflow CRM
   btnSaveCRMJob: document.getElementById('btn-add-job-crm'),
@@ -797,6 +803,23 @@ function renderResume() {
 
 // --- 4. AI Video Avatar Pitch & WebSpeech TTS Engine ---
 function initAvatarSpeech() {
+  // 0. Local Open-Source Voice Server UI Listeners
+  if (DOM.localserverEnable) {
+    DOM.localserverEnable.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      state.useLocalServer = isChecked;
+      if (DOM.localserverFields) {
+        DOM.localserverFields.style.display = isChecked ? 'flex' : 'none';
+      }
+    });
+  }
+
+  if (DOM.localserverUrl) {
+    DOM.localserverUrl.addEventListener('input', (e) => {
+      state.localServerUrl = e.target.value.trim();
+    });
+  }
+
   // 1. Photo Upload Event Listener (Gated behind Pro)
   if (DOM.btnUploadAvatarCard) {
     DOM.btnUploadAvatarCard.addEventListener('click', (e) => {
@@ -978,6 +1001,7 @@ function initAvatarSpeech() {
               mediaRecorder.onstop = () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                 state.clonedAudioUrl = URL.createObjectURL(audioBlob);
+                state.clonedAudioBlob = audioBlob;
               };
               mediaRecorder.stop();
             }
@@ -1114,7 +1138,9 @@ function initAvatarSpeech() {
     const selectedVoiceName = DOM.avatarVoiceSelect.value;
     
     if (selectedVoiceName === 'cloned-user-voice') {
-      if (state.clonedAudioUrl) {
+      if (state.useLocalServer) {
+        speakLocalServer(script);
+      } else if (state.clonedAudioUrl) {
         // Play the recorded sample first
         activeAudio = new Audio(state.clonedAudioUrl);
         
@@ -1144,6 +1170,76 @@ function initAvatarSpeech() {
       speakTTS(script, false);
     }
   });
+
+  // Helper function to read cloned voice via local python server
+  async function speakLocalServer(script) {
+    if (!state.clonedAudioBlob) {
+      alert("Please clone your voice first by clicking 'Clone Your Voice' and recording your sample.");
+      return;
+    }
+
+    DOM.btnPlayVoice.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+    DOM.avatarStatusText.textContent = "Synthesizing cloned voice on local AI server...";
+
+    try {
+      const formData = new FormData();
+      const audioFile = new File([state.clonedAudioBlob], "voice_sample.webm", { type: "audio/webm" });
+      formData.append("file", audioFile);
+      formData.append("text", script);
+
+      const response = await fetch(state.localServerUrl, {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`Local server returned status: ${response.status}`);
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      activeAudio = new Audio(audioUrl);
+
+      activeAudio.onplay = () => {
+        document.body.classList.add('speaking-active');
+        DOM.btnPlayVoice.innerHTML = `<i class="fa-solid fa-circle-stop"></i> Stop Presentation`;
+        DOM.avatarStatusText.textContent = "Presenting Cloned Voice (Local Server)...";
+        DOM.ccTextBox.textContent = `"${script.substring(0, 35)}..."`;
+
+        let words = script.split(' ');
+        let wordIndex = 0;
+        let subtitleInterval = setInterval(() => {
+          if (!activeAudio || activeAudio.paused) {
+            clearInterval(subtitleInterval);
+            return;
+          }
+          if (wordIndex < words.length) {
+            let currentSlice = words.slice(wordIndex, wordIndex + 5).join(' ');
+            DOM.ccTextBox.textContent = `"${currentSlice}..."`;
+            wordIndex += 5;
+          }
+        }, 1500);
+      };
+
+      activeAudio.onended = () => {
+        activeAudio = null;
+        stopSpeechAnimation();
+      };
+
+      activeAudio.onerror = () => {
+        activeAudio = null;
+        stopSpeechAnimation();
+      };
+
+      activeAudio.play();
+
+    } catch (err) {
+      console.error("Local open-source server error:", err);
+      alert("Failed to communicate with your local open-source server. Make sure 'voice_server.py' is running on port 5000. Falling back to simulated engine.");
+      speakTTS(script, true);
+    }
+  }
 
   // Helper function to read text via browser TTS
   function speakTTS(script, isCloned) {

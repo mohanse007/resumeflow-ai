@@ -403,6 +403,22 @@ Improved page load speeds by 25% through optimization of assets.</textarea>
                 <option value="en-US">English (US) - Professional Female</option>
                 <option value="en-GB">English (UK) - Executive Male</option>
               </select>
+              <!-- Local Open-Source Voice Server Configuration -->
+              <div class="localserver-settings" style="margin-top: 10px; padding: 10px 14px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: var(--radius-sm);">
+                <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-light); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
+                  <span>🔌 Local Open-Source AI Server</span>
+                  <input type="checkbox" id="localserver-enable" style="cursor: pointer; width: 14px; height: 14px; accent-color: var(--color-primary);">
+                </div>
+                <div id="localserver-fields" style="display: none; flex-direction: column; gap: 8px; margin-top: 8px;">
+                  <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <span style="font-size: 0.65rem; color: var(--text-muted);">Local Server URL:</span>
+                    <input type="text" id="localserver-url" value="http://localhost:5000/tts" placeholder="http://localhost:5000/tts" style="font-size: 0.75rem; padding: 6px 10px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-light); border-radius: 4px; color: #fff; width: 100%;">
+                  </div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted); line-height: 1.3;">
+                    If active, voice cloning synthesizes the script using your custom voice print on your local Python server (`voice_server.py`).
+                  </div>
+                </div>
+              </div>
               <!-- Mock recorder status overlay -->
               <div id="voice-recorder-status" style="display: none; align-items: center; gap: 10px; margin-top: 6px; padding: 6px 12px; background-color: rgba(168, 85, 247, 0.1); border: 1px dashed rgba(168, 85, 247, 0.25); border-radius: var(--radius-sm); font-size: 0.75rem;">
                 <div class="voice-pulse-circle" id="voice-pulse-circle" style="width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444; transition: transform 0.05s ease;"></div>
