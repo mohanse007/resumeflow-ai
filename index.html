@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumeFlow AI - Premium Resume & Video Avatar Platform</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Container -->
+  <div class="app-container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div class="brand-text">
+          <h2>ResumeFlow<span>.AI</span></h2>
+          <p>Freemium Professional</p>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#" class="nav-item active" data-tab="builder-tab">
+          <i class="fa-solid fa-file-invoice"></i>
+          <span>Resume Editor</span>
+          <span class="badge free">Free</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="avatar-tab" id="nav-avatar">
+          <i class="fa-solid fa-circle-user"></i>
+          <span>Video Avatar</span>
+          <span class="badge pro"><i class="fa-solid fa-crown"></i> Pro</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="careerflow-tab" id="nav-careerflow">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>01 Careerflow</span>
+          <span class="badge pro"><i class="fa-solid fa-crown"></i> Pro</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="jobright-tab" id="nav-jobright">
+          <i class="fa-solid fa-compass"></i>
+          <span>02 Jobright</span>
+          <span class="badge pro"><i class="fa-solid fa-crown"></i> Pro</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="socialsonic-tab" id="nav-socialsonic">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span>03 Social Sonic</span>
+          <span class="badge pro"><i class="fa-solid fa-crown"></i> Pro</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer / Premium CTA -->
+      <div class="sidebar-premium-box" id="premium-cta-card">
+        <div class="premium-icon">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <h3>Upgrade to Premium</h3>
+        <p>Unlock AI Video Avatars, AI job matching, and social post generation.</p>
+        <button class="btn btn-premium" id="btn-upgrade-sidebar">
+          <span>Go Premium</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="user-profile-widget">
+        <div class="avatar-sm">JS</div>
+        <div class="user-info">
+          <h4>John Smith</h4>
+          <span class="tier-label" id="user-tier-label">Free Account</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <main class="main-content">
+
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search templates, jobs, posts...">
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary toggle-demo-state" id="demo-unlock-btn" title="Simulate Premium Purchase">
+            <i class="fa-solid fa-key"></i> <span>Unlock Pro (Demo)</span>
+          </button>
+          <div class="notification-bell">
+            <i class="fa-regular fa-bell"></i>
+            <span class="bell-badge"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB 1: RESUME BUILDER -->
+      <section class="tab-panel active" id="builder-tab">
+        <div class="panel-header">
+          <div>
+            <h1>Interactive Resume Editor</h1>
+            <p>Fill in your details below and view your real-time formatted resume on the right.</p>
+          </div>
+          <div class="builder-actions">
+            <div class="template-selector">
+              <label for="template-select">Template:</label>
+              <select id="template-select">
+                <option value="classic">Classic Professional</option>
+                <option value="tech">Tech / Creative (Green)</option>
+                <option value="executive">Executive Dark-Accent</option>
+                <option value="minimalist">Modern Minimalist</option>
+                <option value="twocolumn">Split Two-Column</option>
+                <option value="elegant">Elegant Serif (Consulting/Finance)</option>
+                <option value="boldtech">Bold Tech Timeline (Developer)</option>
+                <option value="academic">Academic CV (Classical Garamond)</option>
+                <option value="corporate">Corporate Manager (Dark Header Banner)</option>
+                <option value="slate">Slate Professional (Modern Contrast)</option>
+                <option value="startup">Creative Startup (Coral Accents)</option>
+                <option value="functional">Functional Skills-First (Triple Grid)</option>
+                <option value="legal">Traditional Legal (Double Margins)</option>
+                <option value="engineer">Engineering Modern (Right Sidebar)</option>
+                <option value="creative">Creative Minimalist (Teal Asymmetric)</option>
+                <option value="timeline">Modern Timeline (Center Linked)</option>
+                <option value="minibar">Minimalist Thin Sidebar</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" id="btn-pdf-download">
+              <i class="fa-solid fa-file-pdf"></i> <span>Download PDF</span>
+            </button>
+            <button class="btn btn-secondary" id="btn-doc-download">
+              <i class="fa-solid fa-file-word" style="color: #3b82f6;"></i> <span>Download DOC</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="workspace-grid">
+          <!-- Editor Form Fields -->
+          <div class="editor-column scrollable-panel">
+            
+            <!-- Contact Info Section -->
+            <div class="accordion-item expanded">
+              <div class="accordion-header">
+                <h3><i class="fa-solid fa-address-card"></i> Contact Information</h3>
+                <i class="fa-solid fa-chevron-up"></i>
+              </div>
+              <div class="accordion-content">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="resume-fullname" value="John Smith">
+                  </div>
+                  <div class="form-group">
+                    <label>Professional Title</label>
+                    <input type="text" id="resume-title" value="Junior Software Engineer">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="resume-email" value="john.smith@email.com">
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="resume-phone" value="+1 (555) 019-2834">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="resume-location" value="San Francisco, CA">
+                  </div>
+                  <div class="form-group">
+                    <label>LinkedIn / Website</label>
+                    <input type="text" id="resume-website" value="linkedin.com/in/johnsmith">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Summary -->
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <h3><i class="fa-solid fa-user"></i> Professional Summary</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="accordion-content">
+                <div class="form-group">
+                  <div class="flex-label">
+                    <label>Executive Bio / Summary Statement</label>
+                    <button class="btn btn-secondary btn-xs" id="btn-ai-summary" title="AI Generate Summary">
+                      <i class="fa-solid fa-wand-magic-sparkles"></i> AI Generate <span class="badge pro" style="font-size: 0.55rem; padding: 1px 4px; margin-left: 4px;"><i class="fa-solid fa-crown"></i> Pro</span>
+                    </button>
+                  </div>
+                  <textarea id="resume-summary" rows="4">Passionate and detail-oriented Software Engineering graduate with internship experience building responsive web applications. Skilled in HTML, CSS, JavaScript, React, and Node.js. Excited to contribute to innovative projects and collaborate in agile team settings.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Work Experience -->
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <h3><i class="fa-solid fa-briefcase"></i> Work Experience</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="accordion-content">
+                <div id="experience-list">
+                  <!-- Single Job Item -->
+                  <div class="dynamic-item">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" class="exp-company" value="TechNova Solutions">
+                      </div>
+                      <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" class="exp-title" value="Software Engineering Intern">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label>Dates (e.g. 2024 - Present)</label>
+                        <input type="text" class="exp-dates" value="June 2024 - Dec 2024">
+                      </div>
+                      <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="exp-loc" value="Remote">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Key Accomplishments (One per line)</label>
+                      <textarea class="exp-desc" rows="3">Developed and maintained 15+ reusable React UI components.
+Collaborated with backend teams to integrate RESTful API endpoints.
+Improved page load speeds by 25% through optimization of assets.</textarea>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btn-add-experience">
+                  <i class="fa-solid fa-plus"></i> Add Work Experience
+                </button>
+              </div>
+            </div>
+
+            <!-- Education -->
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="accordion-content">
+                <div id="education-list">
+                  <div class="dynamic-item">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label>School / University</label>
+                        <input type="text" class="edu-school" value="State University of California">
+                      </div>
+                      <div class="form-group">
+                        <label>Degree & Major</label>
+                        <input type="text" class="edu-degree" value="B.S. in Computer Science">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label>Graduation Year</label>
+                        <input type="text" class="edu-dates" value="Class of 2024">
+                      </div>
+                      <div class="form-group">
+                        <label>GPA / Honors (Optional)</label>
+                        <input type="text" class="edu-gpa" value="GPA: 3.7 / Cum Laude">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btn-add-education">
+                  <i class="fa-solid fa-plus"></i> Add Education
+                </button>
+              </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <h3><i class="fa-solid fa-gears"></i> Core Skills</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="accordion-content">
+                <div class="form-group">
+                  <label>Skills (Comma separated)</label>
+                  <input type="text" id="resume-skills" value="JavaScript, HTML5, CSS3, React, Node.js, Git, SQL, Agile Methodology, REST APIs">
+                </div>
+              </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <h3><i class="fa-solid fa-laptop-code"></i> Projects</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="accordion-content">
+                <div id="project-list">
+                  <div class="dynamic-item">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label>Project Title</label>
+                        <input type="text" class="proj-title" value="E-Commerce API Service">
+                      </div>
+                      <div class="form-group">
+                        <label>Role / Subtitle</label>
+                        <input type="text" class="proj-subtitle" value="Backend Developer">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Project Description</label>
+                      <textarea class="proj-desc" rows="2">Built a Node.js/Express server processing 100+ requests/sec with MySQL database hosting catalog items.</textarea>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" id="btn-add-project">
+                  <i class="fa-solid fa-plus"></i> Add Project
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Resume Sheet Preview -->
+          <div class="preview-column">
+            <div class="preview-container">
+              <div id="resume-paper" class="resume-sheet template-classic">
+                <!-- Will be dynamically populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: AI VIDEO AVATAR -->
+      <section class="tab-panel" id="avatar-tab">
+        <!-- Locked overlay -->
+        <div class="premium-lock-overlay" id="avatar-lock">
+          <div class="lock-box">
+            <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+            <h2>Premium Video Resume Builder</h2>
+            <p>Generate a professional video resume pitch using a speaking digital AI avatar with high fidelity voices.</p>
+            <button class="btn btn-premium btn-upgrade-trigger">
+              <i class="fa-solid fa-crown"></i> Unlock Now
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <div>
+            <h1>AI Video Resume Avatar</h1>
+            <p>Generate a 60-second video elevator pitch using a speaking digital avatar in real-time.</p>
+          </div>
+        </div>
+
+        <div class="avatar-workspace-grid">
+          <!-- Avatar Customization Controls -->
+          <div class="avatar-controls-col card-glass">
+            <h3><i class="fa-solid fa-sliders"></i> Avatar & Voice Settings</h3>
+            
+            <div class="control-section">
+              <label>Select Speaking Avatar</label>
+              <div class="avatar-grid-select">
+                <div class="avatar-option-card active" data-avatar="sofia">
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" alt="Sophia">
+                  <span>Sophia (Tech)</span>
+                </div>
+                <div class="avatar-option-card" data-avatar="james">
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150" alt="James">
+                  <span>James (Executive)</span>
+                </div>
+                <div class="avatar-option-card" data-avatar="liam">
+                  <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=150" alt="Liam">
+                  <span>Liam (Creative)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-section">
+              <label for="avatar-voice-select">Choose AI Accent / Voice</label>
+              <select id="avatar-voice-select">
+                <!-- Populated dynamically via SpeechSynthesis -->
+                <option value="en-US">English (US) - Professional Female</option>
+                <option value="en-GB">English (UK) - Executive Male</option>
+              </select>
+            </div>
+
+            <div class="control-section">
+              <div class="flex-label">
+                <label>Elevator Pitch Script</label>
+                <button class="btn btn-secondary btn-xs" id="btn-auto-script">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Generate from Resume
+                </button>
+              </div>
+              <textarea id="avatar-script-text" rows="5">Hello there! My name is John Smith, and I am a Junior Software Engineer based in San Francisco. I specialize in building responsive web applications using React, HTML5, CSS3, and Node.js. In my previous role at TechNova Solutions, I developed 15+ React UI components and optimized loading speeds by 25%. I am eager to join a collaborative tech team where I can apply my development skills. Thank you for listening!</textarea>
+            </div>
+
+            <div class="avatar-action-row">
+              <button class="btn btn-secondary" id="btn-play-voice">
+                <i class="fa-solid fa-volume-high"></i> Play Speech Preview
+              </button>
+              <button class="btn btn-premium" id="btn-export-hd-video">
+                <i class="fa-solid fa-circle-play"></i> Generate HD Video File
+              </button>
+            </div>
+          </div>
+
+          <!-- Video Avatar Visualizer -->
+          <div class="avatar-visualizer-col card-glass">
+            <div class="video-preview-wrapper">
+              <div class="avatar-frame">
+                <!-- Dynamic Talking Avatar Container -->
+                <div class="avatar-character-viewport active" id="viewport-sofia">
+                  <!-- Outer frame for avatar image -->
+                  <div class="avatar-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" alt="Sophia" class="avatar-image-base">
+                    <!-- Dynamic simulated lips / talking indicator overlay -->
+                    <div class="pulse-overlay-ring"></div>
+                    <div class="mouth-indicator"></div>
+                  </div>
+                </div>
+
+                <div class="avatar-character-viewport" id="viewport-james">
+                  <div class="avatar-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600" alt="James" class="avatar-image-base">
+                    <div class="pulse-overlay-ring"></div>
+                    <div class="mouth-indicator"></div>
+                  </div>
+                </div>
+
+                <div class="avatar-character-viewport" id="viewport-liam">
+                  <div class="avatar-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" alt="Liam" class="avatar-image-base">
+                    <div class="pulse-overlay-ring"></div>
+                    <div class="mouth-indicator"></div>
+                  </div>
+                </div>
+
+                <!-- Video overlay elements -->
+                <div class="avatar-status-badge">
+                  <span class="status-dot"></span>
+                  <span id="avatar-status-text">Ready to Record</span>
+                </div>
+
+                <!-- Closed captions -->
+                <div class="closed-captions-overlay" id="cc-text-box">
+                  Select "Play Speech Preview" to listen to the avatar pitch.
+                </div>
+              </div>
+            </div>
+
+            <div class="visualizer-stats">
+              <div class="stat-item">
+                <span class="label">Script Length:</span>
+                <span class="value" id="script-word-count">80 words</span>
+              </div>
+              <div class="stat-item">
+                <span class="label">Estimated Duration:</span>
+                <span class="value" id="script-duration">38 seconds</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CAREERFLOW TRACKER -->
+      <section class="tab-panel" id="careerflow-tab">
+        <div class="premium-lock-overlay" id="careerflow-lock">
+          <div class="lock-box">
+            <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+            <h2>Careerflow Application Tracker</h2>
+            <p>Sync your resume directly, track interviews, manage deadlines, and audit your LinkedIn profile SEO.</p>
+            <button class="btn btn-premium btn-upgrade-trigger">
+              <i class="fa-solid fa-crown"></i> Unlock Now
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <div>
+            <h1>01 Careerflow CRM & Optimizer</h1>
+            <p>Manage your job search pipeline and optimize your professional online presence.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-add-job-crm">
+            <i class="fa-solid fa-plus"></i> Add New Job Application
+          </button>
+        </div>
+
+        <!-- Careerflow Layout -->
+        <div class="careerflow-grid">
+          
+          <!-- LinkedIn Audit Tool -->
+          <div class="linkedin-audit-section card-glass">
+            <h3><i class="fa-brands fa-linkedin text-linkedin"></i> LinkedIn Optimization Score</h3>
+            <div class="audit-meter-wrapper">
+              <div class="meter-radial">
+                <svg viewBox="0 0 36 36" class="circular-chart">
+                  <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path class="circle" id="audit-score-circle" stroke-dasharray="68, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <text x="18" y="20.35" class="percentage" id="audit-score-value">68%</text>
+                </svg>
+              </div>
+              <div class="audit-summary-text">
+                <h4>Profile SEO Status: Good</h4>
+                <p>Your profile is searchable but missing key software engineer keywords.</p>
+              </div>
+            </div>
+            <div class="audit-checklist">
+              <div class="check-item passed">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Professional headline structured correctly</span>
+              </div>
+              <div class="check-item warning" id="check-skills">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Missing 3 skills found in target jobs (SQL, Git)</span>
+              </div>
+              <div class="check-item missing" id="check-about">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <span>About section is too short (needs target keywords)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kanban Job CRM -->
+          <div class="kanban-pipeline-wrapper">
+            <!-- Columns -->
+            <div class="kanban-column" data-stage="wishlist">
+              <div class="column-header">
+                <h4>Wishlist <span class="count-badge">2</span></h4>
+              </div>
+              <div class="kanban-cards-list" id="crm-wishlist">
+                <div class="kanban-card">
+                  <div class="card-meta">Google</div>
+                  <h5>Frontend Engineer</h5>
+                  <div class="card-date"><i class="fa-regular fa-calendar"></i> Saved June 20</div>
+                  <div class="card-footer-action">
+                    <button class="btn-advance" onclick="moveCRMCard(this, 'applied')">Apply <i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <div class="kanban-card">
+                  <div class="card-meta">Stripe</div>
+                  <h5>Software Engineer - Intern</h5>
+                  <div class="card-date"><i class="fa-regular fa-calendar"></i> Saved June 18</div>
+                  <div class="card-footer-action">
+                    <button class="btn-advance" onclick="moveCRMCard(this, 'applied')">Apply <i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-column" data-stage="applied">
+              <div class="column-header">
+                <h4>Applied <span class="count-badge">1</span></h4>
+              </div>
+              <div class="kanban-cards-list" id="crm-applied">
+                <div class="kanban-card">
+                  <div class="card-meta">Netflix</div>
+                  <h5>UI Engineer</h5>
+                  <div class="card-date"><i class="fa-regular fa-calendar"></i> Applied June 15</div>
+                  <div class="card-footer-action">
+                    <button class="btn-advance" onclick="moveCRMCard(this, 'interview')">Interview <i class="fa-solid fa-arrow-right"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-column" data-stage="interview">
+              <div class="column-header animate-glow">
+                <h4>Interviewing <span class="count-badge">1</span></h4>
+              </div>
+              <div class="kanban-cards-list" id="crm-interview">
+                <div class="kanban-card active-interview">
+                  <div class="card-meta">Figma</div>
+                  <h5>React Developer Intern</h5>
+                  <div class="card-date"><i class="fa-regular fa-clock"></i> Technical Round: June 25</div>
+                  <div class="card-footer-action">
+                    <button class="btn-advance success" onclick="moveCRMCard(this, 'offer')">Got Offer <i class="fa-solid fa-trophy"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kanban-column" data-stage="offer">
+              <div class="column-header">
+                <h4>Offers <span class="count-badge">0</span></h4>
+              </div>
+              <div class="kanban-cards-list" id="crm-offer">
+                <!-- Drop offer cards here -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 4: JOBRIGHT SCANNER -->
+      <section class="tab-panel" id="jobright-tab">
+        <div class="premium-lock-overlay" id="jobright-lock">
+          <div class="lock-box">
+            <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+            <h2>Jobright AI Job Copilot</h2>
+            <p>Paste target job descriptions to analyze resume match scores, extract keyword gaps, and auto-tune your profile.</p>
+            <button class="btn btn-premium btn-upgrade-trigger">
+              <i class="fa-solid fa-crown"></i> Unlock Now
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <div>
+            <h1>02 Jobright AI Match Scanner</h1>
+            <p>Analyze your resume against job specifications to identify keyword gaps before you apply.</p>
+          </div>
+        </div>
+
+        <div class="jobright-grid">
+          <!-- Text Area Input -->
+          <div class="jobright-input-col card-glass">
+            <h3><i class="fa-solid fa-paste"></i> Paste Target Job Description</h3>
+            <p>Paste the details of the job listing you want to target.</p>
+            <textarea id="job-desc-text" rows="12" placeholder="Example:
+We are looking for a Software Engineer Intern with experience in HTML, CSS, JavaScript, React, SQL, and Git. The ideal candidate has completed projects in web application development, understands REST APIs, and enjoys coding collaboratively in agile environments..."></textarea>
+            <button class="btn btn-primary btn-full-width" id="btn-scan-match">
+              <i class="fa-solid fa-circle-nodes"></i> Scan & Calculate Match Score
+            </button>
+          </div>
+
+          <!-- Scan Analysis Report -->
+          <div class="jobright-report-col card-glass">
+            <h3><i class="fa-solid fa-chart-pie"></i> Match Score Analysis</h3>
+            
+            <div class="scan-loading-wrapper" id="scan-loading">
+              <div class="spinner"></div>
+              <p>Analyzing job requirements and scanning resume keywords...</p>
+            </div>
+
+            <div class="report-content-wrapper" id="report-view-content">
+              <!-- Circle score progress -->
+              <div class="score-card">
+                <div class="score-circle-container">
+                  <div class="score-circle-radial">
+                    <span id="scan-score-num">--%</span>
+                  </div>
+                </div>
+                <div class="score-summary-text">
+                  <h4 id="scan-score-label">Please run a scan</h4>
+                  <p id="scan-score-desc">Upload a job description on the left to evaluate compatibility.</p>
+                </div>
+              </div>
+
+              <!-- Gaps and Suggestions -->
+              <div class="scan-analysis-details">
+                <div class="detail-block">
+                  <h5><span class="text-success"><i class="fa-solid fa-check-circle"></i></span> Matching Keywords</h5>
+                  <div class="keyword-pill-container" id="matched-keywords">
+                    <span class="keyword-pill success">React</span>
+                    <span class="keyword-pill success">JavaScript</span>
+                    <span class="keyword-pill success">HTML</span>
+                    <span class="keyword-pill success">CSS</span>
+                  </div>
+                </div>
+                <div class="detail-block">
+                  <h5><span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span> Keyword Gaps (Add these to improve matching)</h5>
+                  <div class="keyword-pill-container" id="missing-keywords">
+                    <span class="keyword-pill danger">SQL</span>
+                    <span class="keyword-pill danger">Git</span>
+                    <span class="keyword-pill danger">Agile</span>
+                  </div>
+                </div>
+                <div class="detail-block">
+                  <h5><span class="text-warning"><i class="fa-solid fa-lightbulb"></i></span> Recommendation</h5>
+                  <p id="scan-recommendation">Your resume looks strong in core frontend frameworks. Add 1-2 descriptions highlighting Git branching and SQL relational queries from your database coursework to push your matching score above 85%.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: SOCIAL SONIC CREATOR -->
+      <section class="tab-panel" id="socialsonic-tab">
+        <div class="premium-lock-overlay" id="socialsonic-lock">
+          <div class="lock-box">
+            <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+            <h2>Social Sonic LinkedIn Copywriter</h2>
+            <p>Automatically turn your accomplishments and video resumes into viral LinkedIn growth posts that grab recruiter attention.</p>
+            <button class="btn btn-premium btn-upgrade-trigger">
+              <i class="fa-solid fa-crown"></i> Unlock Now
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <div>
+            <h1>03 Social Sonic Personal Brand Builder</h1>
+            <p>Generate high-engagement LinkedIn posts and carousels showcasing your resume credentials.</p>
+          </div>
+        </div>
+
+        <div class="socialsonic-grid">
+          <!-- Settings and Styles -->
+          <div class="sonic-control-col card-glass">
+            <h3><i class="fa-solid fa-sliders"></i> Brand Voice Settings</h3>
+            
+            <div class="control-section">
+              <label for="sonic-post-style">Post Style Format</label>
+              <select id="sonic-post-style">
+                <option value="story">Personal Journey Story (High Engagement)</option>
+                <option value="technical">Project Deep Dive (Showcase Skills)</option>
+                <option value="announcement">Open to Work Announcement (Professional)</option>
+              </select>
+            </div>
+
+            <div class="control-section">
+              <label for="sonic-emoji-density">Emoji Density</label>
+              <select id="sonic-emoji-density">
+                <option value="moderate">Moderate & Professional (Default)</option>
+                <option value="high">High Engagement (Gen Z Creator)</option>
+                <option value="none">No Emojis (Minimalist)</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary btn-full-width" id="btn-generate-linkedin-post">
+              <i class="fa-solid fa-pencil"></i> Write LinkedIn Post
+            </button>
+          </div>
+
+          <!-- Live Post Output Mockup -->
+          <div class="sonic-preview-col card-glass">
+            <h3><i class="fa-brands fa-linkedin-in text-linkedin"></i> LinkedIn Preview Mockup</h3>
+            
+            <div class="linkedin-post-card">
+              <div class="post-header">
+                <div class="avatar-md">JS</div>
+                <div class="post-profile-info">
+                  <div class="profile-name">John Smith</div>
+                  <div class="profile-headline" id="sonic-profile-headline">Junior Software Engineer | Seeking Opportunities</div>
+                  <div class="post-timestamp">1h • Edited • <i class="fa-solid fa-earth-americas"></i></div>
+                </div>
+              </div>
+
+              <!-- Dynamic Post Text Content -->
+              <div class="post-body-text" id="sonic-post-output">
+                Choose a post format style on the left and click "Write LinkedIn Post" to see your personalized recruitment story.
+              </div>
+
+              <div class="post-media-attachment" id="sonic-post-media-card">
+                <div class="media-card-flex">
+                  <div class="media-details">
+                    <span class="media-tag">RESUME ATTACHED</span>
+                    <h5 id="media-card-title">John Smith - Software Engineer Resume.pdf</h5>
+                    <p id="media-card-desc">Interactive portfolio and video avatar introduction inside.</p>
+                  </div>
+                  <div class="media-icon-box">
+                    <i class="fa-solid fa-file-pdf"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="post-actions-flex">
+                <div class="action-btn"><i class="fa-regular fa-thumbs-up"></i> Like</div>
+                <div class="action-btn"><i class="fa-regular fa-comment"></i> Comment</div>
+                <div class="action-btn"><i class="fa-solid fa-share-nodes"></i> Share</div>
+                <div class="action-btn"><i class="fa-solid fa-paper-plane"></i> Send</div>
+              </div>
+            </div>
+
+            <div class="sonic-action-row">
+              <button class="btn btn-secondary" id="btn-copy-post">
+                <i class="fa-regular fa-copy"></i> Copy Post to Clipboard
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- UPGRADE PREMIUM CHECKOUT MODAL -->
+  <div class="modal-backdrop" id="upgrade-modal">
+    <div class="modal-card">
+      <div class="modal-close" id="modal-close-btn">&times;</div>
+      <div class="modal-header-hero">
+        <i class="fa-solid fa-crown hero-crown"></i>
+        <h2>Upgrade to Pro Account</h2>
+        <p>Gain access to cutting-edge AI utilities and tools to fast-track your job search.</p>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Pricing Split -->
+        <div class="pricing-cards-flex">
+          <div class="modal-pricing-box">
+            <span class="plan-badge">MONTHLY</span>
+            <div class="price-val">$9.99<span>/month</span></div>
+            <p>Flexible plan, cancel anytime.</p>
+          </div>
+          <div class="modal-pricing-box popular">
+            <span class="plan-badge">ANNUAL SAVINGS</span>
+            <div class="price-val">$79.99<span>/year</span></div>
+            <p>Save 33% on job searching dashboard.</p>
+          </div>
+        </div>
+
+        <!-- Features list -->
+        <div class="pro-features-checklist">
+          <h4>What's included in Premium:</h4>
+          <div class="feature-checklist-row">
+            <div class="check-col"><i class="fa-solid fa-circle-check"></i> Unlimited Speaks & HD Video Resume Downloads</div>
+            <div class="check-col"><i class="fa-solid fa-circle-check"></i> Jobright AI Resume Match Scanner & Audits</div>
+          </div>
+          <div class="feature-checklist-row">
+            <div class="check-col"><i class="fa-solid fa-circle-check"></i> Careerflow CRM job pipeline & LinkedIn Audit</div>
+            <div class="check-col"><i class="fa-solid fa-circle-check"></i> Social Sonic Viral Copywriter & PDF Carousels</div>
+          </div>
+        </div>
+
+        <!-- Simulated Checkout -->
+        <div class="payment-form-simulator">
+          <h4>Simulated Checkout</h4>
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label>Card Number</label>
+              <input type="text" value="4242 4242 4242 4242" disabled>
+            </div>
+            <div class="form-group">
+              <label>Expiry</label>
+              <input type="text" value="12/28" disabled>
+            </div>
+            <div class="form-group">
+              <label>CVC</label>
+              <input type="text" value="***" disabled>
+            </div>
+          </div>
+          <button class="btn btn-premium btn-full-width" id="btn-activate-premium">
+            <i class="fa-solid fa-credit-card"></i> Pay $9.99 & Unlock Instantly
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML to PDF Download Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- App Main Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
