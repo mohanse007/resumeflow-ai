@@ -1196,6 +1196,9 @@ function initAvatarSpeech() {
         throw new Error(`Local server returned status: ${response.status}`);
       }
 
+      const engine = response.headers.get("X-Voice-Engine");
+      const isFallback = (engine === "Simulated");
+
       const audioBlob = await response.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
 
@@ -1204,7 +1207,9 @@ function initAvatarSpeech() {
       activeAudio.onplay = () => {
         document.body.classList.add('speaking-active');
         DOM.btnPlayVoice.innerHTML = `<i class="fa-solid fa-circle-stop"></i> Stop Presentation`;
-        DOM.avatarStatusText.textContent = "Presenting Cloned Voice (Local Server)...";
+        DOM.avatarStatusText.textContent = isFallback 
+          ? "Presenting Cloned Voice (Local Server Fallback)..." 
+          : "Presenting Cloned Voice (Local Server Real Clone)...";
         DOM.ccTextBox.textContent = `"${script.substring(0, 35)}..."`;
 
         let words = script.split(' ');

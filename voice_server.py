@@ -40,9 +40,22 @@ try:
 except Exception as e:
     print("\n⚠️ WARNING: Could not load Coqui TTS model.")
     print(f"Error detail: {e}")
+    print("--------------------------------------------------------------------------------")
     print("The server will run in 'Lightweight Fallback Mode'.")
     print("To enable actual voice cloning, make sure PyTorch and TTS are installed: pip install PyTorch TTS")
     print("--------------------------------------------------------------------------------\n")
+    
+    # Auto-install gtts if missing
+    try:
+        import gtts
+    except ImportError:
+        print("gTTS package is missing. Installing gtts for high-quality fallback text-to-speech...")
+        import subprocess
+        try:
+            subprocess.run([sys.executable, "-m", "pip", "install", "gtts"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            print("🎉 gTTS successfully installed!")
+        except Exception as install_err:
+            print(f"Could not auto-install gtts: {install_err}")
 
 @app.route('/tts', methods=['POST'])
 def text_to_speech():
@@ -102,12 +115,15 @@ def text_to_speech():
 
         # 3. Stream the generated cloned audio WAV back to the browser
         if os.path.exists(output_path):
-            return send_file(
+            resp = send_file(
                 output_path,
                 mimetype="audio/wav",
                 as_attachment=True,
                 download_name="cloned_voice.wav"
             )
+            # Add custom header to inform frontend of the synthesis engine used
+            resp.headers["X-Voice-Engine"] = "Coqui-XTTS" if HAS_TTS else "Simulated"
+            return resp
         else:
             return jsonify({"error": "Failed to generate cloned voice file."}), 500
 
