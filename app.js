@@ -288,9 +288,21 @@ function initFormBindings() {
     });
   }
 
-  // Photo input listener
+  // Photo input listener & action buttons setup
   const photoInput = document.getElementById('resume-photo-input');
+  const uploadTrigger = document.getElementById('btn-upload-photo-trigger');
+  const actionsContainer = document.getElementById('photo-actions-container');
   const photoPreview = document.getElementById('resume-photo-preview');
+  const changePhotoBtn = document.getElementById('btn-change-photo');
+  const removePhotoBtn = document.getElementById('btn-remove-photo');
+
+  if (uploadTrigger && photoInput) {
+    uploadTrigger.addEventListener('click', () => photoInput.click());
+  }
+  if (changePhotoBtn && photoInput) {
+    changePhotoBtn.addEventListener('click', () => photoInput.click());
+  }
+
   if (photoInput) {
     photoInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
@@ -298,13 +310,23 @@ function initFormBindings() {
       const reader = new FileReader();
       reader.onload = (event) => {
         state.resume.photoUrl = event.target.result;
-        if (photoPreview) {
-          photoPreview.src = event.target.result;
-          photoPreview.style.display = 'block';
-        }
+        if (photoPreview) photoPreview.src = event.target.result;
+        if (uploadTrigger) uploadTrigger.style.display = 'none';
+        if (actionsContainer) actionsContainer.style.display = 'flex';
         renderResume();
       };
       reader.readAsDataURL(file);
+    });
+  }
+
+  if (removePhotoBtn) {
+    removePhotoBtn.addEventListener('click', () => {
+      state.resume.photoUrl = "";
+      if (photoInput) photoInput.value = "";
+      if (photoPreview) photoPreview.src = "";
+      if (uploadTrigger) uploadTrigger.style.display = 'inline-block';
+      if (actionsContainer) actionsContainer.style.display = 'none';
+      renderResume();
     });
   }
 
