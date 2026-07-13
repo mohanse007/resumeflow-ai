@@ -451,6 +451,14 @@ input, textarea, select, button {
   height: calc(100vh - var(--header-height) - 100px);
 }
 
+.workspace-grid.hide-preview {
+  grid-template-columns: 1fr !important;
+}
+
+.workspace-grid.hide-preview .preview-column {
+  display: none !important;
+}
+
 /* Scrollable Editor Panel */
 .scrollable-panel {
   overflow-y: auto;
@@ -1360,6 +1368,14 @@ select option {
   color: #0f172a;
   margin-bottom: 4px;
   text-align: right;
+}
+
+.template-stanns .objective-text {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #000;
 }
 
 /* Template 9: Corporate Manager */

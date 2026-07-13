@@ -81,7 +81,8 @@ const state = {
     aadhaar: "1234 5678 9012",
     declaration: "I hereby declare that all the information furnished above is true and correct to the best of my knowledge and belief.",
     place: "BOSTON, MA",
-    signature: "John Smith"
+    signature: "John Smith",
+    professionalSkills: "Delivering organic and general chemistry lectures to undergraduate students.\nSupervising and instructing students during laboratory investigations.\nEvaluating and grading student chemistry reports and lab performances.\nDeveloping chemistry curriculum and designing experimental projects."
   }
 };
 
@@ -260,7 +261,8 @@ function initFormBindings() {
     { id: 'resume-aadhaar', field: 'aadhaar' },
     { id: 'resume-declaration', field: 'declaration' },
     { id: 'resume-place', field: 'place' },
-    { id: 'resume-signature', field: 'signature' }
+    { id: 'resume-signature', field: 'signature' },
+    { id: 'resume-professional-skills', field: 'professionalSkills' }
   ];
 
   inputs.forEach(item => {
@@ -513,6 +515,19 @@ bindDynamicInputs();
 
 // --- 3. Live Resume Template Rendering Engine ---
 function initTemplateEngine() {
+  const btnTogglePreview = document.getElementById('btn-toggle-preview');
+  if (btnTogglePreview) {
+    btnTogglePreview.addEventListener('click', () => {
+      const grid = document.querySelector('.workspace-grid');
+      const isHidden = grid.classList.toggle('hide-preview');
+      if (isHidden) {
+        btnTogglePreview.innerHTML = '<i class="fa-solid fa-eye"></i> Show Preview';
+      } else {
+        btnTogglePreview.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide Preview';
+      }
+    });
+  }
+
   DOM.templateSelect.addEventListener('change', (e) => {
     const template = e.target.value;
     
@@ -754,17 +769,20 @@ function renderResume() {
 
   // Render layouts conditionally
   if (selectedTemplate === 'stanns') {
+    const hasPhoto = r.photoUrl ? true : false;
     DOM.resumePaper.innerHTML = `
       <div class="cv-header-title-bar">CURRICULUMVITAE</div>
       
-      <div class="cv-header-info">
-        <div class="cv-header-photo-wrapper">
-          <img class="cv-header-photo" src="${r.photoUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200'}" alt="Profile Photo">
-        </div>
-        <div class="cv-header-details">
-          <div><strong>ADDRESS:</strong> ${r.location || 'Dr. No:6-10-12/2, Drivers colonly, old gajuwaka, Visakhapatnam-530026.'}</div>
-          <div style="margin-top: 6px;"><strong>CONTACT NO:</strong> ${r.phone || '9121379182, 7702834256'}</div>
-          <div><strong>EMAIL:</strong> ${r.email || 'chinni.sv786@gmail.com'}</div>
+      <div class="cv-header-info" style="${hasPhoto ? '' : 'justify-content: flex-end;'}">
+        ${hasPhoto ? `
+          <div class="cv-header-photo-wrapper">
+            <img class="cv-header-photo" src="${r.photoUrl}" alt="Profile Photo">
+          </div>
+        ` : ''}
+        <div class="cv-header-details" style="${hasPhoto ? '' : 'text-align: right;'}">
+          <div><strong>ADDRESS:</strong> ${r.location || ''}</div>
+          <div style="margin-top: 6px;"><strong>CONTACT NO:</strong> ${r.phone || ''}</div>
+          <div><strong>EMAIL:</strong> ${r.email || ''}</div>
         </div>
       </div>
 
@@ -777,7 +795,7 @@ function renderResume() {
 
       ${r.careerObjective ? `
         <h4 class="section-title">Career Objective</h4>
-        <p style="font-size: 0.82rem; line-height: 1.5; margin-bottom: 16px; text-align: left;">${r.careerObjective}</p>
+        <p class="objective-text">${r.careerObjective}</p>
       ` : ''}
 
       ${r.education && r.education.length > 0 ? `
@@ -833,6 +851,13 @@ function renderResume() {
         </ul>
       ` : ''}
 
+      ${r.professionalSkills ? `
+        <h4 class="section-title">Professional Skill</h4>
+        <ul class="resume-bullet-list">
+          ${r.professionalSkills.split('\n').map(s => s.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
       ${r.workshopsAttended ? `
         <h4 class="section-title">Workshops/ Seminars/ Conferences Attended</h4>
         <ul class="resume-bullet-list">
@@ -862,34 +887,17 @@ function renderResume() {
       ` : ''}
 
       <h4 class="section-title">Personal Profile</h4>
-      <div class="personal-profile-grid">
-        <div class="personal-profile-label">Name</div>
-        <div class="personal-profile-value">: ${r.fullName || ''}</div>
-        
-        <div class="personal-profile-label">Father's Name</div>
-        <div class="personal-profile-value">: ${r.fatherName || ''}</div>
-        
-        <div class="personal-profile-label">Date of Birth</div>
-        <div class="personal-profile-value">: ${r.dob || ''}</div>
-        
-        <div class="personal-profile-label">Sex</div>
-        <div class="personal-profile-value">: ${r.sex || ''}</div>
-        
-        <div class="personal-profile-label">Marital Status</div>
-        <div class="personal-profile-value">: ${r.maritalStatus || ''}</div>
-        
-        <div class="personal-profile-label">Languages Known</div>
-        <div class="personal-profile-value">: ${r.languages || ''}</div>
-        
-        <div class="personal-profile-label">Nationality</div>
-        <div class="personal-profile-value">: ${r.nationality || ''}</div>
-        
-        <div class="personal-profile-label">Hobbies</div>
-        <div class="personal-profile-value">: ${r.hobbies || ''}</div>
-        
-        <div class="personal-profile-label">Aadhaar No.</div>
-        <div class="personal-profile-value">: ${r.aadhaar || ''}</div>
-      </div>
+      <ul class="resume-bullet-list">
+        <li><strong>NAME</strong> : ${r.fullName || ''}</li>
+        <li><strong>FATHER'S NAME</strong> : ${r.fatherName || ''}</li>
+        <li><strong>DATE OF BIRTH</strong> : ${r.dob || ''}</li>
+        <li><strong>SEX</strong> : ${r.sex || ''}</li>
+        <li><strong>MARITAL STATUS</strong> : ${r.maritalStatus || ''}</li>
+        <li><strong>LANGUAGES KNOWN</strong> : ${r.languages || ''}</li>
+        <li><strong>NATIONALITY</strong> : ${r.nationality || ''}</li>
+        <li><strong>HOBBIES</strong> : ${r.hobbies || ''}</li>
+        <li><strong>AADHAAR NO.</strong> : ${r.aadhaar || ''}</li>
+      </ul>
 
       ${r.declaration ? `
         <h4 class="section-title">Declaration</h4>
