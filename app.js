@@ -12,94 +12,76 @@ const state = {
   localServerUrl: 'http://localhost:5000/tts',
   activeTab: 'builder-tab',
   resume: {
-    fullName: "SHAIK VALISHA",
+    fullName: "JOHN SMITH",
     title: "Lecturer in Chemistry",
-    email: "chinni.sv786@gmail.com",
-    phone: "9121379182, 7702834256",
-    location: "Dr. No:6-10-12/2, Drivers colonly, old gajuwaka, Visakhapatnam-530026.",
+    email: "john.smith@email.com",
+    phone: "+1 (555) 019-2834",
+    location: "123 Academic Way, Science District, Boston, MA 02108",
     website: "",
-    summary: "I have enjoyed an extensive career teaching chemistry for students, which has allowed me to gain substantial knowledge and expertise in educating young adolescents.\nNot only am I highly educated in the sciences, my years of teaching have vastly improved my teaching abilities.\nI also believe that my friendly personality and calm temperament are very harmonious with the requirements of a good teacher.\nGiven my teaching track-record and my consistently competent performances; I am confident that I would be a valuable asset to any educational institution.",
-    skills: ["Excellent interpersonal skills.", "Strong analytical and logical skills.", "Ability to maintain high standards of achievement, behaviour, discipline and punctuality amongst students.", "Ability in clarifying the doubts."],
+    summary: "Dedicated and enthusiastic Chemistry Lecturer with several years of experience teaching chemistry courses and supervising academic laboratory experiments.\nSkilled in designing comprehensive course syllabi and creating engaging learning materials.\nStrong interpersonal and communication skills to motivate and guide young minds.\nProven track record of maintaining high standards of behavior, academic achievement, and classroom safety.",
+    skills: ["Excellent interpersonal skills.", "Strong analytical and logical thinking.", "Classroom management & student engagement.", "Lab safety protocols & instruction."],
     experience: [
       {
-        company: "St. Ann's college, Visakhapatnam",
-        title: "Junior Lecturer and Degree Lecturer",
-        dates: "2019 - Present",
-        location: "Visakhapatnam",
+        company: "Boston Science College",
+        title: "Lecturer in Chemistry",
+        dates: "2020 - Present",
+        location: "Boston, MA",
         bullets: [
-          "Working as Junior Lecturer and Degree Lecturer in St. Ann's college, Visakhapatnam from 2019 onwards.",
-          "Provided appropriate instruction for students and assessed their learning.",
-          "Conducted chemistry labs with specially designed student experiments and investigations.",
-          "Evaluated and graded student’s chemistry laboratory performance.",
-          "Developed chemistry curriculum and facilitated learning through effective lesson implementation.",
-          "Organizing Field trips, Projects, ICT classes and Internship programmes for evaluating the students."
+          "Delivering organic and general chemistry lectures to undergraduate students.",
+          "Supervising and instructing students during laboratory investigations.",
+          "Evaluating and grading student chemistry reports and lab performances.",
+          "Developing chemistry curriculum and designing experimental projects."
         ]
       },
       {
-        company: "Visakha Defence Academy, Visakhapatnam",
-        title: "Junior Lecturer and Degree Lecturer",
-        dates: "2016 - 2017",
-        location: "Visakhapatnam",
+        company: "Elite High Academy",
+        title: "Chemistry Instructor",
+        dates: "2017 - 2020",
+        location: "Boston, MA",
         bullets: [
-          "Worked as Junior Lecturer and Degree Lecturer in Visakha Defence Academy, Visakhapatnam from 2016-2017."
+          "Taught advanced chemistry classes and prepared students for college entrance examinations."
         ]
       }
     ],
     education: [
       {
-        school: "Chaitanya Women's College For PG, Gajuwaka, Visakhapatnam",
-        degree: "M.SC",
-        discipline: "Organic Chemistry",
-        board: "Andhra University",
-        dates: "2016",
-        gpa: "80%"
-      },
-      {
-        school: "St. Ann's Degree College for Women, Malkapuram, Visakhapatnam",
-        degree: "B.SC",
+        school: "State University of Massachusetts",
+        degree: "M.Sc.",
         discipline: "Chemistry",
-        board: "Andhra University",
-        dates: "2014",
-        gpa: "83%"
+        board: "University Board",
+        dates: "2017",
+        gpa: "85%"
       },
       {
-        school: "St. Ann's Junior College for Women, Malkapuram, Visakhapatnam",
-        degree: "Intermediate",
-        discipline: "MPC",
-        board: "B.I. E",
-        dates: "2011",
-        gpa: "82%"
-      },
-      {
-        school: "Mohan Secondary School, Gajuwaka",
-        degree: "SSC",
-        discipline: "",
-        board: "B.S. E",
-        dates: "2009",
-        gpa: "84%"
+        school: "Boston Degree College",
+        degree: "B.Sc.",
+        discipline: "Chemistry",
+        board: "College Board",
+        dates: "2015",
+        gpa: "88%"
       }
     ],
     projects: [],
     
     // Custom Traditional CV fields
     photoUrl: "", 
-    careerObjective: "To get a challenging position of lecturer in which I can utilize my experience and make the bright carrier of students.",
-    otherQualification: "PURSUING B.ED",
-    workshopsAttended: "Attended National seminar on \"Chemical speciation in Biology and Marine Environment-CSBME-2019\" on 29th and 30th of September at ANDHRA UNIVERSITY, Visakhapatnam District.\nAttended National level Webinar on \"TOTAL SYNTHESIS OF NATURAL PRODUCTS USING CHIRAL POOL COMPOUNDS\" on 19/7/2020 at Andhra Loyola college(A), Vijayawada District.\nAttended National level Webinar on \"CHEMDRAW IN CHEMISTRY TEACHING AND RESEARCH\" on 28/8/2020 at Government Degree College, East Godavari District.\nAttended National level Webinar on \"FREE ONLINE TOOLS USEFUL FOR EFFECTIVE CHEMISTRY LECTURING\" on 9/7/2020 at St. Vincent De Paul College, Eluru.\nAttended 2 days workshop on \"OUTCOME BASED EDUCATION ON IMPORTANCE OF ACCREDITATION TO ENHANCE THE QUALITY IN TECHNICAL EDUCATION\" on 25th and 26th March,2021 at GITAM UNIVERSITY, Visakhapatnam.",
-    workshopsOrganized: "Conducted National level Webinar on \"ANALYTICAL METHODS IN CHEMISTRY\" on 23/7/2021 for UG students at St. Ann's College, Visakhapatnam.",
-    paperPublications: "No paper publications",
-    awards: "No Awards and Recognition",
-    fatherName: "SHAIK DURGA PRASAD",
-    dob: "04/04/1995",
-    sex: "FEMALE",
-    maritalStatus: "UNMARRIED",
-    languages: "TELUGU & ENGLISH",
-    nationality: "MUSLIM",
-    hobbies: "LEARNING SUBJECT, PLAYING PUZZLES.",
-    aadhaar: "618396631471",
-    declaration: "I, solemnly declare that all the above information is correct to the best of myknowledgeandbelief.",
-    place: "VISAKHAPATNAM",
-    signature: "S.k. Valisha"
+    careerObjective: "To secure a challenging position as a lecturer where I can utilize my academic background and teaching skills to make a positive impact on student outcomes.",
+    otherQualification: "CERTIFIED SCIENCE INSTRUCTOR",
+    workshopsAttended: "Attended National Seminar on Chemical Education and Pedagogy in 2023.\nAttended Workshop on Modern Laboratory safety practices in 2021.\nAttended Webinar on Active Learning in College Science in 2020.",
+    workshopsOrganized: "Organized Seminar on Analytical Chemistry Methods for High School Students in 2022.",
+    paperPublications: "No publications",
+    awards: "Outstanding Teacher Award, 2022",
+    fatherName: "Robert Smith",
+    dob: "01/01/1990",
+    sex: "MALE",
+    maritalStatus: "MARRIED",
+    languages: "English & Spanish",
+    nationality: "American",
+    hobbies: "Reading, scientific writing, hiking",
+    aadhaar: "1234 5678 9012",
+    declaration: "I hereby declare that all the information furnished above is true and correct to the best of my knowledge and belief.",
+    place: "BOSTON, MA",
+    signature: "John Smith"
   }
 };
 
