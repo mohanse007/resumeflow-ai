@@ -1209,6 +1209,159 @@ select option {
   margin-bottom: 16px;
 }
 
+/* Template: St.Anns */
+.template-stanns {
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  color: #000;
+  padding: 45px;
+  line-height: 1.4;
+}
+
+.template-stanns .cv-header-title-bar {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.template-stanns .cv-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.template-stanns .cv-header-photo-wrapper {
+  flex-shrink: 0;
+}
+
+.template-stanns .cv-header-photo {
+  width: 105px;
+  height: 125px;
+  border: 1px solid #000;
+  object-fit: cover;
+  display: block;
+}
+
+.template-stanns .cv-header-details {
+  text-align: left;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #000;
+  flex-grow: 1;
+}
+
+.template-stanns .cv-header-details div {
+  margin-bottom: 3px;
+}
+
+.template-stanns h4.section-title {
+  border-top: 1.5px solid #000;
+  border-bottom: 1.5px solid #000;
+  padding: 6px 0;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  color: #000;
+  text-align: left;
+}
+
+.template-stanns .resume-bullet-list {
+  padding-left: 24px;
+  margin-bottom: 12px;
+  list-style-type: disc;
+}
+
+.template-stanns .resume-bullet-list li {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-bottom: 5px;
+  color: #000;
+  text-align: left;
+}
+
+.template-stanns .academic-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.template-stanns .academic-table th, 
+.template-stanns .academic-table td {
+  border: 1px solid #000;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  text-align: left;
+  line-height: 1.35;
+  color: #000;
+}
+
+.template-stanns .academic-table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.template-stanns .personal-profile-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  row-gap: 6px;
+  font-size: 0.82rem;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.template-stanns .personal-profile-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.template-stanns .personal-profile-value {
+  color: #000;
+}
+
+.template-stanns .declaration-block {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-top: 12px;
+  margin-bottom: 24px;
+  color: #000;
+  text-align: left;
+}
+
+.template-stanns .footer-flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 36px;
+  font-size: 0.82rem;
+  color: #000;
+}
+
+.template-stanns .signature-block {
+  text-align: right;
+  min-width: 150px;
+}
+
+.template-stanns .signature-text {
+  font-family: 'Brush Script MT', 'Lucida Handwriting', cursive, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin-bottom: 4px;
+  text-align: right;
+}
+
 /* Template 9: Corporate Manager */
 .template-corporate {
   padding: 0 0 36px 0 !important;

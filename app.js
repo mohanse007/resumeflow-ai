@@ -12,42 +12,94 @@ const state = {
   localServerUrl: 'http://localhost:5000/tts',
   activeTab: 'builder-tab',
   resume: {
-    fullName: "John Smith",
-    title: "Junior Software Engineer",
-    email: "john.smith@email.com",
-    phone: "+1 (555) 019-2834",
-    location: "San Francisco, CA",
-    website: "linkedin.com/in/johnsmith",
-    summary: "Passionate and detail-oriented Software Engineering graduate with internship experience building responsive web applications. Skilled in HTML, CSS, JavaScript, React, and Node.js. Excited to contribute to innovative projects and collaborate in agile team settings.",
-    skills: ["JavaScript", "HTML5", "CSS3", "React", "Node.js", "Git", "SQL", "Agile Methodology", "REST APIs"],
+    fullName: "SHAIK VALISHA",
+    title: "Lecturer in Chemistry",
+    email: "chinni.sv786@gmail.com",
+    phone: "9121379182, 7702834256",
+    location: "Dr. No:6-10-12/2, Drivers colonly, old gajuwaka, Visakhapatnam-530026.",
+    website: "",
+    summary: "I have enjoyed an extensive career teaching chemistry for students, which has allowed me to gain substantial knowledge and expertise in educating young adolescents.\nNot only am I highly educated in the sciences, my years of teaching have vastly improved my teaching abilities.\nI also believe that my friendly personality and calm temperament are very harmonious with the requirements of a good teacher.\nGiven my teaching track-record and my consistently competent performances; I am confident that I would be a valuable asset to any educational institution.",
+    skills: ["Excellent interpersonal skills.", "Strong analytical and logical skills.", "Ability to maintain high standards of achievement, behaviour, discipline and punctuality amongst students.", "Ability in clarifying the doubts."],
     experience: [
       {
-        company: "TechNova Solutions",
-        title: "Software Engineering Intern",
-        dates: "June 2024 - Dec 2024",
-        location: "Remote",
+        company: "St. Ann's college, Visakhapatnam",
+        title: "Junior Lecturer and Degree Lecturer",
+        dates: "2019 - Present",
+        location: "Visakhapatnam",
         bullets: [
-          "Developed and maintained 15+ reusable React UI components.",
-          "Collaborated with backend teams to integrate RESTful API endpoints.",
-          "Improved page load speeds by 25% through optimization of assets."
+          "Working as Junior Lecturer and Degree Lecturer in St. Ann's college, Visakhapatnam from 2019 onwards.",
+          "Provided appropriate instruction for students and assessed their learning.",
+          "Conducted chemistry labs with specially designed student experiments and investigations.",
+          "Evaluated and graded student’s chemistry laboratory performance.",
+          "Developed chemistry curriculum and facilitated learning through effective lesson implementation.",
+          "Organizing Field trips, Projects, ICT classes and Internship programmes for evaluating the students."
+        ]
+      },
+      {
+        company: "Visakha Defence Academy, Visakhapatnam",
+        title: "Junior Lecturer and Degree Lecturer",
+        dates: "2016 - 2017",
+        location: "Visakhapatnam",
+        bullets: [
+          "Worked as Junior Lecturer and Degree Lecturer in Visakha Defence Academy, Visakhapatnam from 2016-2017."
         ]
       }
     ],
     education: [
       {
-        school: "State University of California",
-        degree: "B.S. in Computer Science",
-        dates: "Class of 2024",
-        gpa: "GPA: 3.7 / Cum Laude"
+        school: "Chaitanya Women's College For PG, Gajuwaka, Visakhapatnam",
+        degree: "M.SC",
+        discipline: "Organic Chemistry",
+        board: "Andhra University",
+        dates: "2016",
+        gpa: "80%"
+      },
+      {
+        school: "St. Ann's Degree College for Women, Malkapuram, Visakhapatnam",
+        degree: "B.SC",
+        discipline: "Chemistry",
+        board: "Andhra University",
+        dates: "2014",
+        gpa: "83%"
+      },
+      {
+        school: "St. Ann's Junior College for Women, Malkapuram, Visakhapatnam",
+        degree: "Intermediate",
+        discipline: "MPC",
+        board: "B.I. E",
+        dates: "2011",
+        gpa: "82%"
+      },
+      {
+        school: "Mohan Secondary School, Gajuwaka",
+        degree: "SSC",
+        discipline: "",
+        board: "B.S. E",
+        dates: "2009",
+        gpa: "84%"
       }
     ],
-    projects: [
-      {
-        title: "E-Commerce API Service",
-        subtitle: "Backend Developer",
-        desc: "Built a Node.js/Express server processing 100+ requests/sec with MySQL database hosting catalog items."
-      }
-    ]
+    projects: [],
+    
+    // Custom Traditional CV fields
+    photoUrl: "", 
+    careerObjective: "To get a challenging position of lecturer in which I can utilize my experience and make the bright carrier of students.",
+    otherQualification: "PURSUING B.ED",
+    workshopsAttended: "Attended National seminar on \"Chemical speciation in Biology and Marine Environment-CSBME-2019\" on 29th and 30th of September at ANDHRA UNIVERSITY, Visakhapatnam District.\nAttended National level Webinar on \"TOTAL SYNTHESIS OF NATURAL PRODUCTS USING CHIRAL POOL COMPOUNDS\" on 19/7/2020 at Andhra Loyola college(A), Vijayawada District.\nAttended National level Webinar on \"CHEMDRAW IN CHEMISTRY TEACHING AND RESEARCH\" on 28/8/2020 at Government Degree College, East Godavari District.\nAttended National level Webinar on \"FREE ONLINE TOOLS USEFUL FOR EFFECTIVE CHEMISTRY LECTURING\" on 9/7/2020 at St. Vincent De Paul College, Eluru.\nAttended 2 days workshop on \"OUTCOME BASED EDUCATION ON IMPORTANCE OF ACCREDITATION TO ENHANCE THE QUALITY IN TECHNICAL EDUCATION\" on 25th and 26th March,2021 at GITAM UNIVERSITY, Visakhapatnam.",
+    workshopsOrganized: "Conducted National level Webinar on \"ANALYTICAL METHODS IN CHEMISTRY\" on 23/7/2021 for UG students at St. Ann's College, Visakhapatnam.",
+    paperPublications: "No paper publications",
+    awards: "No Awards and Recognition",
+    fatherName: "SHAIK DURGA PRASAD",
+    dob: "04/04/1995",
+    sex: "FEMALE",
+    maritalStatus: "UNMARRIED",
+    languages: "TELUGU & ENGLISH",
+    nationality: "MUSLIM",
+    hobbies: "LEARNING SUBJECT, PLAYING PUZZLES.",
+    aadhaar: "618396631471",
+    declaration: "I, solemnly declare that all the above information is correct to the best of myknowledgeandbelief.",
+    place: "VISAKHAPATNAM",
+    signature: "S.k. Valisha"
   }
 };
 
@@ -209,7 +261,24 @@ function initFormBindings() {
     { id: 'resume-phone', field: 'phone' },
     { id: 'resume-location', field: 'location' },
     { id: 'resume-website', field: 'website' },
-    { id: 'resume-summary', field: 'summary' }
+    { id: 'resume-summary', field: 'summary' },
+    { id: 'resume-objective', field: 'careerObjective' },
+    { id: 'resume-other-qual', field: 'otherQualification' },
+    { id: 'resume-workshops-attended', field: 'workshopsAttended' },
+    { id: 'resume-workshops-organized', field: 'workshopsOrganized' },
+    { id: 'resume-publications', field: 'paperPublications' },
+    { id: 'resume-awards', field: 'awards' },
+    { id: 'resume-father-name', field: 'fatherName' },
+    { id: 'resume-dob', field: 'dob' },
+    { id: 'resume-sex', field: 'sex' },
+    { id: 'resume-marital-status', field: 'maritalStatus' },
+    { id: 'resume-languages', field: 'languages' },
+    { id: 'resume-nationality', field: 'nationality' },
+    { id: 'resume-hobbies', field: 'hobbies' },
+    { id: 'resume-aadhaar', field: 'aadhaar' },
+    { id: 'resume-declaration', field: 'declaration' },
+    { id: 'resume-place', field: 'place' },
+    { id: 'resume-signature', field: 'signature' }
   ];
 
   inputs.forEach(item => {
@@ -232,6 +301,26 @@ function initFormBindings() {
       state.resume.skills = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
       renderResume();
       updateLinkedInAudit();
+    });
+  }
+
+  // Photo input listener
+  const photoInput = document.getElementById('resume-photo-input');
+  const photoPreview = document.getElementById('resume-photo-preview');
+  if (photoInput) {
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        state.resume.photoUrl = event.target.result;
+        if (photoPreview) {
+          photoPreview.src = event.target.result;
+          photoPreview.style.display = 'block';
+        }
+        renderResume();
+      };
+      reader.readAsDataURL(file);
     });
   }
 
@@ -322,21 +411,31 @@ function addEducationFormItem() {
     <div class="dynamic-item">
       <div class="form-row">
         <div class="form-group">
-          <label>School / University</label>
+          <label>School / College</label>
           <input type="text" class="edu-school" placeholder="e.g. Stanford University">
         </div>
         <div class="form-group">
-          <label>Degree & Major</label>
-          <input type="text" class="edu-degree" placeholder="e.g. M.S. in Computer Science">
+          <label>Degree / Qualification</label>
+          <input type="text" class="edu-degree" placeholder="e.g. M.S.">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Graduation Year</label>
+          <label>Discipline / Major</label>
+          <input type="text" class="edu-discipline" placeholder="e.g. Computer Science">
+        </div>
+        <div class="form-group">
+          <label>Board / University</label>
+          <input type="text" class="edu-board" placeholder="e.g. Stanford University Board">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Graduation Year / Dates</label>
           <input type="text" class="edu-dates" placeholder="e.g. Class of 2025">
         </div>
         <div class="form-group">
-          <label>GPA / Honors (Optional)</label>
+          <label>Marks % / GPA</label>
           <input type="text" class="edu-gpa" placeholder="e.g. GPA: 3.9">
         </div>
       </div>
@@ -398,9 +497,13 @@ function harvestDynamicData() {
   const eduItems = [];
   const eduBlocks = document.querySelectorAll('#education-list .dynamic-item');
   eduBlocks.forEach(block => {
+    const disciplineEl = block.querySelector('.edu-discipline');
+    const boardEl = block.querySelector('.edu-board');
     eduItems.push({
       school: block.querySelector('.edu-school').value || "",
       degree: block.querySelector('.edu-degree').value || "",
+      discipline: disciplineEl ? disciplineEl.value || "" : "",
+      board: boardEl ? boardEl.value || "" : "",
       dates: block.querySelector('.edu-dates').value || "",
       gpa: block.querySelector('.edu-gpa').value || ""
     });
@@ -668,7 +771,163 @@ function renderResume() {
   }
 
   // Render layouts conditionally
-  if (selectedTemplate === 'twocolumn' || selectedTemplate === 'minibar') {
+  if (selectedTemplate === 'stanns') {
+    DOM.resumePaper.innerHTML = `
+      <div class="cv-header-title-bar">CURRICULUMVITAE</div>
+      
+      <div class="cv-header-info">
+        <div class="cv-header-photo-wrapper">
+          <img class="cv-header-photo" src="${r.photoUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200'}" alt="Profile Photo">
+        </div>
+        <div class="cv-header-details">
+          <div><strong>ADDRESS:</strong> ${r.location || 'Dr. No:6-10-12/2, Drivers colonly, old gajuwaka, Visakhapatnam-530026.'}</div>
+          <div style="margin-top: 6px;"><strong>CONTACT NO:</strong> ${r.phone || '9121379182, 7702834256'}</div>
+          <div><strong>EMAIL:</strong> ${r.email || 'chinni.sv786@gmail.com'}</div>
+        </div>
+      </div>
+
+      ${r.summary ? `
+        <h4 class="section-title">Profile</h4>
+        <ul class="resume-bullet-list">
+          ${r.summary.split('\n').map(bullet => bullet.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.careerObjective ? `
+        <h4 class="section-title">Career Objective</h4>
+        <p style="font-size: 0.82rem; line-height: 1.5; margin-bottom: 16px; text-align: left;">${r.careerObjective}</p>
+      ` : ''}
+
+      ${r.education && r.education.length > 0 ? `
+        <h4 class="section-title">Academic Qualification/ Education</h4>
+        <table class="academic-table">
+          <thead>
+            <tr>
+              <th>Qualification</th>
+              <th>Discipline</th>
+              <th>School/College</th>
+              <th>Board/University</th>
+              <th>% of mark</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${r.education.map(edu => `
+              <tr>
+                <td><strong>${edu.degree || ''}</strong></td>
+                <td>${edu.discipline || ''}</td>
+                <td>${edu.school || ''}</td>
+                <td>${edu.board || ''}</td>
+                <td>${edu.gpa || ''}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      ` : ''}
+
+      ${r.otherQualification ? `
+        <h4 class="section-title">Other Qualification</h4>
+        <ul class="resume-bullet-list">
+          ${r.otherQualification.split('\n').map(q => q.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.experience && r.experience.length > 0 ? `
+        <h4 class="section-title">Experience</h4>
+        <ul class="resume-bullet-list">
+          ${r.experience.map(job => {
+            let jobBullets = job.bullets.map(b => `<li>${b}</li>`).join('');
+            if (!jobBullets && job.company) {
+              jobBullets = `<li>Working at ${job.company} as ${job.title} (${job.dates})</li>`;
+            }
+            return jobBullets;
+          }).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.skills && r.skills.length > 0 ? `
+        <h4 class="section-title">Personal Skill</h4>
+        <ul class="resume-bullet-list">
+          ${r.skills.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.workshopsAttended ? `
+        <h4 class="section-title">Workshops/ Seminars/ Conferences Attended</h4>
+        <ul class="resume-bullet-list">
+          ${r.workshopsAttended.split('\n').map(w => w.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.workshopsOrganized ? `
+        <h4 class="section-title">Workshops/ Seminars/ Conferences Organized</h4>
+        <ul class="resume-bullet-list">
+          ${r.workshopsOrganized.split('\n').map(w => w.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.paperPublications ? `
+        <h4 class="section-title">Paper Publications</h4>
+        <ul class="resume-bullet-list">
+          ${r.paperPublications.split('\n').map(w => w.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      ${r.awards ? `
+        <h4 class="section-title">Awards/ Recognition</h4>
+        <ul class="resume-bullet-list">
+          ${r.awards.split('\n').map(w => w.trim()).filter(Boolean).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      ` : ''}
+
+      <h4 class="section-title">Personal Profile</h4>
+      <div class="personal-profile-grid">
+        <div class="personal-profile-label">Name</div>
+        <div class="personal-profile-value">: ${r.fullName || ''}</div>
+        
+        <div class="personal-profile-label">Father's Name</div>
+        <div class="personal-profile-value">: ${r.fatherName || ''}</div>
+        
+        <div class="personal-profile-label">Date of Birth</div>
+        <div class="personal-profile-value">: ${r.dob || ''}</div>
+        
+        <div class="personal-profile-label">Sex</div>
+        <div class="personal-profile-value">: ${r.sex || ''}</div>
+        
+        <div class="personal-profile-label">Marital Status</div>
+        <div class="personal-profile-value">: ${r.maritalStatus || ''}</div>
+        
+        <div class="personal-profile-label">Languages Known</div>
+        <div class="personal-profile-value">: ${r.languages || ''}</div>
+        
+        <div class="personal-profile-label">Nationality</div>
+        <div class="personal-profile-value">: ${r.nationality || ''}</div>
+        
+        <div class="personal-profile-label">Hobbies</div>
+        <div class="personal-profile-value">: ${r.hobbies || ''}</div>
+        
+        <div class="personal-profile-label">Aadhaar No.</div>
+        <div class="personal-profile-value">: ${r.aadhaar || ''}</div>
+      </div>
+
+      ${r.declaration ? `
+        <h4 class="section-title">Declaration</h4>
+        <div class="declaration-block">
+          ${r.declaration}
+        </div>
+      ` : ''}
+
+      <div class="footer-flex-row">
+        <div>
+          <div><strong>DATE:</strong> ${new Date().toLocaleDateString('en-GB')}</div>
+          <div style="margin-top: 4px;"><strong>PLACE:</strong> ${r.place || 'VISAKHAPATNAM'}</div>
+        </div>
+        <div class="signature-block">
+          <div class="signature-text">${r.signature || ''}</div>
+          <div style="border-top: 1px solid #000; padding-top: 4px; font-weight: bold; font-size: 0.75rem;">SIGNATURE:</div>
+        </div>
+      </div>
+    `;
+  } else if (selectedTemplate === 'twocolumn' || selectedTemplate === 'minibar') {
     DOM.resumePaper.innerHTML = `
       <div class="two-col-layout">
         <!-- Sidebar (Left Col) -->
